@@ -2,7 +2,6 @@
 
 const text = await Deno.readTextFile("./input.txt");
 const lines = text.split("\n");
-const letters = lines.map(it => it.split(""));
 const lineLength = lines[0].length;
 
 function totalMatches(text, regexes) {
@@ -22,6 +21,8 @@ const regexes = [
 ]
 
 console.log(totalMatches(text, regexes));
+
+// part 2
 
 const regexes2 = [
   new RegExp(`(?=M[XMAS]M.{${lineLength - 1}}A.{${lineLength - 1}}S[XMAS]S)`, "gs"),
