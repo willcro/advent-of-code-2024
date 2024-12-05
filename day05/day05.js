@@ -12,16 +12,9 @@ const pors = parts[0].split("\n")
     }
   });
 
-const befores = {};
 const afters = {};
 
 pors.forEach(por => {
-  if (befores[por.after] == undefined) {
-    befores[por.after] = new Set([por.before]);
-  } else {
-    befores[por.after].add(por.before);
-  }
-
   if (afters[por.before] == undefined) {
     afters[por.before] = new Set([por.after]);
   } else {
@@ -35,13 +28,8 @@ function test(update) {
   for (let i = 0; i < update.length; i++) {
     const page = update[i];
     const beforeSlice = update.slice(0, i);
-    const afterSlice = update.slice(i + 1);
     
-    if (beforeSlice.some(p => afters[page] != undefined && afters[page].has(p))) {
-      return false;
-    }
-
-    if (afterSlice.some(p => befores[page] != undefined && befores[page].has(p))) {
+    if (afters[page] != undefined && beforeSlice.some(p => afters[page].has(p))) {
       return false;
     }
   }
@@ -52,8 +40,8 @@ function score(update) {
   return update[Math.floor(update.length / 2)];
 }
 
-function compare(a, b, recursive = false) {
-  if (afters[a] == undefined && afters[a].has(b)) {
+function compare(a, b) {
+  if (afters[a] != undefined && afters[a].has(b)) {
     return -1;
   }
 
