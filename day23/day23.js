@@ -69,9 +69,6 @@ console.log(createTriplets(map));
 // part 2
 
 function biggestGroup(map, group, tail) {
-  if (group.size == 0) {
-    console.log(tail);
-  }
   const next = Array.from(map[tail]);
 
   return next
